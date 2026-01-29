@@ -1,11 +1,11 @@
-package com.tankbird.endlessrunner;
+package com.tankbird.endlessrunner
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Game
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends Game {
-    @Override
-    public void create() {
-        setScreen(new FirstScreen());
+/** [com.badlogic.gdx.ApplicationListener] implementation shared by all platforms. */
+class Main : Game() {
+
+    override fun create() {
+        setScreen(FirstScreen())
     }
 }
