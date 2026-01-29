@@ -1,15 +1,36 @@
 package com.tankbird.endlessrunner
 
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.utils.ScreenUtils
 
 /** First screen of the application. Displayed after the application is created.  */
-class FirstScreen : Screen {
+class FirstScreen(private val game: Main) : Screen {
+
+    private val backgroundTexture: Texture = Texture("background.png")
+
     override fun show() {
         // Prepare your screen here.
     }
 
     override fun render(delta: Float) {
-        // Draw your screen here. "delta" is the time since last render in seconds.
+        draw()
+    }
+
+    private fun draw() {
+        ScreenUtils.clear(Color.BLACK)
+
+        game.viewport.apply()
+        game.batch.projectionMatrix = game.viewport.camera?.combined
+
+        game.batch.begin()
+
+        val worldWidth = game.viewport.worldWidth
+        val worldHeight = game.viewport.worldHeight
+        game.batch.draw(backgroundTexture, 0f, 0f, worldWidth, worldHeight)
+
+        game.batch.end()
     }
 
     override fun resize(width: Int, height: Int) {
@@ -17,7 +38,7 @@ class FirstScreen : Screen {
         // In that case, we don't resize anything, and wait for the window to be a normal size before updating.
         if (width <= 0 || height <= 0) return
 
-        // Resize your screen here. The parameters represent the new window size.
+        game.viewport.update(width, height, true)
     }
 
     override fun pause() {
@@ -33,6 +54,6 @@ class FirstScreen : Screen {
     }
 
     override fun dispose() {
-        // Destroy screen's assets here.
+        backgroundTexture.dispose()
     }
 }
